@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "quotes generator",
       theme: ThemeData(primaryColor: Colors.cyan),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
