@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quotesgenerator/components/button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +9,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late String quote;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +70,18 @@ class _HomePageState extends State<HomePage> {
           )
         ]),
       ),
-      body: Container(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(child: Text(quote)),
+          Row(
+            children: [
+              Button(text: "get quote", onPressed: getQuote),
+              Button(text: "add to favorites", onPressed: addToFavorites)
+            ],
+          )
+        ],
+      ),
     );
   }
 }
