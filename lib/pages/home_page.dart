@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quotesgenerator/pages/favorites_page.dart';
 
 import 'package:quotesgenerator/pages/quotes_page.dart';
 
@@ -10,8 +11,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    Widget body = QuotesPage();
+
+    if (_selectedIndex == 1) {
+      body = FavoritesPage();
+    }
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
@@ -38,8 +45,10 @@ class _HomePageState extends State<HomePage> {
             )),
             ListTile(
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const HomePage()));
+                setState(() {
+                  _selectedIndex = 0;
+                });
+                Navigator.of(context).pop();
               },
               leading: const Icon(
                 Icons.home,
@@ -57,13 +66,19 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 10,
             ),
-            const ListTile(
-              leading: Icon(
+            ListTile(
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 1;
+                });
+                Navigator.of(context).pop();
+              },
+              leading: const Icon(
                 Icons.favorite,
                 color: Colors.white,
-                size: 40,
+                size: 30,
               ),
-              title: Text(
+              title: const Text(
                 "Favorites",
                 style: TextStyle(
                     color: Colors.white,
@@ -73,6 +88,6 @@ class _HomePageState extends State<HomePage> {
             )
           ]),
         ),
-        body: QuotesPage());
+        body: body);
   }
 }

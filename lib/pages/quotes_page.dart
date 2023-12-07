@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quotesgenerator/components/button.dart';
 
 class QuotesPage extends StatefulWidget {
@@ -15,7 +16,13 @@ class QuotesPage extends StatefulWidget {
 class _QuotesPageState extends State<QuotesPage> {
   late String quote = "";
   bool isLoading = false;
-  // List<String> favorites = [];
+  List<String> favorites = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadFavorites();
+  }
 
   void getQuote() async {
     setState(() {
@@ -45,7 +52,43 @@ class _QuotesPageState extends State<QuotesPage> {
     }
   }
 
-  void addToFavorites() {}
+  void loadFavorites() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey("favorites")) {
+      setState(() {
+        favorites = prefs.getStringList('favorites')!;
+      });
+    }
+  }
+
+  void saveToFavorites() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('favorites', favorites);
+  }
+
+  void addToFavorites() {
+    if (!favorites.contains(quote) && quote.isNotEmpty) {
+      setState(() {
+        favorites.add(quote);
+      });
+
+      saveToFavorites();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("quotes added to favorites"),
+        backgroundColor: Colors.green,
+      ));
+    } else if (quote.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("please get a quote first"),
+        backgroundColor: Colors.red,
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("quote already in favorites"),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
