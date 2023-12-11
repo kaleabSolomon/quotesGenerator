@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     Widget body = QuotesPage();

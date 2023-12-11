@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  String text;
-  VoidCallback onPressed;
   Button({super.key, required this.text, required this.onPressed});
+
+  VoidCallback onPressed;
+  String text;
 
   @override
   Widget build(BuildContext context) {

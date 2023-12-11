@@ -14,9 +14,9 @@ class QuotesPage extends StatefulWidget {
 }
 
 class _QuotesPageState extends State<QuotesPage> {
-  late String quote = "";
-  bool isLoading = false;
   List<String> favorites = [];
+  bool isLoading = false;
+  late String quote = "";
 
   @override
   void initState() {
